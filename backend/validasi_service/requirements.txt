@@ -9,3 +9,5 @@ werkzeug
 pyjwt
 
 flask_mail
+
+flask_cors

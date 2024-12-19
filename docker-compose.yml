@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   mahasiswa:
-    build: ./pengajuan_service
+    build: ./backend/pengajuan_service
     container_name: pengajuan_service
     ports:
       - "5001:5000"
@@ -14,10 +14,10 @@ services:
       - FLASK_ENV=development
       - REDIS_HOST=redis  # Variabel lingkungan untuk menghubungkan ke Redis
     volumes:
-      - ./pengajuan_service:/app
+      - ./backend/pengajuan_service:/app
 
   admin:
-    build: ./validasi_service
+    build: ./backend/validasi_service
     container_name: validasi_service
     ports:
       - "5002:5000"
@@ -29,10 +29,10 @@ services:
       - FLASK_ENV=development
       - REDIS_HOST=redis  # Variabel lingkungan untuk menghubungkan ke Redis
     volumes:
-      - ./validasi_service:/app
+      - ./backend/validasi_service:/app
 
   login:
-    build: ./login_service
+    build: ./backend/login_service
     container_name: login_service
     ports:
       - "5003:5000"
@@ -42,8 +42,15 @@ services:
       - FLASK_APP=app.py
       - FLASK_ENV=development
     volumes:
-      - ./login_service:/app
+      - ./backend/login_service:/app
 
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      # - "8080:80" # Production
+      - "8080:5173" # Development
 
   db:
     image: mysql:5.7
@@ -67,4 +74,3 @@ services:
 volumes:
   db-data:
   redis-data:
-  
